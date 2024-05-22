@@ -52,11 +52,12 @@ function setTriggerDay() {
     .atDate(last.getFullYear(), last.getMonth() + 1, last.getDate())
     .create();
 }
-setTriggerHoursLast
-既存の setTriggerHoursLast のトリガーを削除し、最終営業日の18:00に sendSlack 関数を実行する新しいトリガーを設定します。
+```
 
-javascript
-Copy code
+### setTriggerHoursLast
+既存の `setTriggerHoursLast` のトリガーを削除し、最終営業日の18:00に sendSlack 関数を実行する新しいトリガーを設定します。
+
+```javascript
 function setTriggerHoursLast() {
   deleteTrigger("setTriggerHoursLast");
   ScriptApp.newTrigger("sendSlack")
@@ -64,11 +65,12 @@ function setTriggerHoursLast() {
     .after(8 * 60 * 60 * 1000)
     .create();
 }
-sendSlack
-既存の sendSlack のトリガーを削除し、スプレッドシートから情報を取得してSlackに通知を送信します。
+```
 
-javascript
-Copy code
+### sendSlack
+既存の `sendSlack` のトリガーを削除し、スプレッドシートから情報を取得してSlackに通知を送信します。
+
+```javascript
 function sendSlack() {
   deleteTrigger("sendSlack");
   var options = {
@@ -82,10 +84,12 @@ function sendSlack() {
   var url = "https://slack.com/api/chat.postMessage";
   UrlFetchApp.fetch(url, options);
 }
-deleteTrigger
+```
+
+### deleteTrigger
 指定されたハンドラ関数名のトリガーをすべて削除します。
 
-javascript
+```javascript
 Copy code
 function deleteTrigger(name) {
   var triggers = ScriptApp.getProjectTriggers();
@@ -95,11 +99,12 @@ function deleteTrigger(name) {
     }
   }
 }
-lastBusinessDay
+```
+
+### lastBusinessDay
 今月の最終営業日を計算して返します。
 
-javascript
-Copy code
+```javascript
 function lastBusinessDay() {
   var today = new Date();
   var lastDayOfThisMonth = new Date(today.getFullYear(), today.getMonth() + 1, -5);
@@ -114,11 +119,12 @@ function lastBusinessDay() {
   }
   return lastDayOfThisMonth;
 }
-isHoliday
+```
+
+### isHoliday
 指定された日が日本の祝日かどうかを確認します。
 
-javascript
-Copy code
+```javascript
 function isHoliday(day) {
   var startDate = new Date(day.setHours(0, 0, 0, 0));
   var endDate = new Date(day.setHours(23, 59, 59));
@@ -126,22 +132,24 @@ function isHoliday(day) {
   var holidays = cal.getEvents(startDate, endDate);
   return holidays.length != 0; // 祝日ならtrue
 }
-testPost
+```
+
+### testPost
 Slackにサンプルメッセージを送信するテスト関数。
 
-javascript
-Copy code
+```javascript
 function testPost() {
   const app_auth_token = "xoxb-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX";
   const channel = "your-channel-id";
   const result = postMessageToSlackChannel(app_auth_token, channel, getinfofromspreadsheet());
   Logger.log(result);
 }
-postMessageToSlackChannel
+```
+
+### postMessageToSlackChannel
 指定されたSlackチャンネルにメッセージを送信します。
 
-javascript
-Copy code
+```javascript
 function postMessageToSlackChannel(app_auth_token, channel, message) {
   const payload = {
     "token": app_auth_token,
@@ -155,11 +163,12 @@ function postMessageToSlackChannel(app_auth_token, channel, message) {
   };
   return UrlFetchApp.fetch("https://slack.com/api/chat.postMessage", options);
 }
-getinfofromspreadsheet
+```
+
+### getinfofromspreadsheet
 Googleスプレッドシートから情報を取得し、Slackメッセージ用にフォーマットします。
 
-javascript
-Copy code
+```javascript
 function getinfofromspreadsheet() {
   const SHEET_ID = "your-spreadsheet-id";
   const SHEET_NAME = "your-sheet-name";
@@ -202,3 +211,4 @@ function getinfofromspreadsheet() {
   }
   return text;
 }
+```
