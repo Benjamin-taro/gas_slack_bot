@@ -2,6 +2,8 @@
 
 This Google Apps Script sends notifications to a Slack channel on the last business day of each month. It checks for upcoming lease expirations and sends reminders accordingly.
 
+[日本語版はこちら](README.ja.md)
+
 ## Table of Contents
 
 - [Setup](#setup)
